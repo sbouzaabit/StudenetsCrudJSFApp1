@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title> Students registration</title>
+    <h:outputStylesheet library="css" name="myStyle.css"  />
+</h:head>
+
+
+<h:body>
+    <h:form>
+
+        <h:messages styleClass="error"/>
+        First name : <h:inputText id="fName" value="#{studentController.student.firstName}" label="First name" required="true" requiredMessage="le Prenom est obligatoire"/> <h:message for="fName" styleClass="error"/><br/>
+        Last name : <h:inputText   id="lName" value="#{studentController.student.lastName}" /><br/>
+        Email : <h:inputText id="email" value="#{studentController.student.email}" label="Email" required="true"/><h:message for="lName" styleClass="error"/><br/>
+
+        <h:commandButton value="save" action="#{studentController.addStudent (studentController.student)}" /><br/>
+<p><h:outputLink value="students.xhtml">back</h:outputLink></p>
+    </h:form>
+
+</h:body>
+
+
+</html>

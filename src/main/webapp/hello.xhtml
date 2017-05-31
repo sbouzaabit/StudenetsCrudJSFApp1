@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<title> Students registration</title>
+    <h:outputStylesheet library="css" name="myStyle.css"  />
+</h:head>
+
+
+<h:body>
+    <h:form>
+        First name : <h:inputText id="firstName" value="#{studentController.firstName}" /> <br/>
+        Last name : <h:inputText id="lastName" value="#{studentController.lastName}" /><br/>
+        <h:selectOneMenu value="#{studentController.country}">
+            <f:selectItem itemValue="France" itemLabel="France"/>
+            <f:selectItem itemValue="Maroc" itemLabel="Maroc"/>
+        </h:selectOneMenu><br/>
+        <h:selectOneMenu value="#{studentController.country}">
+            <f:selectItems value="#{studentController.country2}"/>
+        </h:selectOneMenu><br/>
+        <h:commandButton value="submit" action="result" /><br/>
+
+        <h:selectOneRadio value="#{studentController.favoriteLanguage}">
+            <f:selectItem itemLabel="java" itemValue="java"/>
+            <f:selectItem itemLabel="php" itemValue="php"/>
+            <f:selectItem itemLabel="C" itemValue="C"/>
+        </h:selectOneRadio><br/>
+
+
+        <h:selectManyCheckbox value="#{studentController.favoriteLanguages}">
+            <f:selectItem itemLabel="java" itemValue="java"/>
+            <f:selectItem itemLabel="php" itemValue="php"/>
+            <f:selectItem itemLabel="C" itemValue="C"/>
+        </h:selectManyCheckbox><br/><br/><br/><br/>
+
+-----Validatio : -----------------<br/><br/>
+        <h:messages styleClass="error"/>
+        First name : <h:inputText id="fName" value="#{studentController.firstName}" label="First name" required="true" requiredMessage="le Prenom est obligatoire"/> <h:message for="fName" styleClass="error"/><br/>
+        Last name : <h:inputText   id="lName" value="#{studentController.lastName}" /><br/>
+        Email : <h:inputText value="#{studentController.lastName}" label="Email" required="true"/><h:message for="lName" styleClass="error"/><br/>
+        code : <h:inputText value="#{studentController.code}" label="code" validator="#{studentController.validateCode}"/><br/>
+        <h:commandButton value="submit" action="result" /><br/>
+
+    </h:form>
+<h:form>
+        -----Navigation : -----------------<br/><br/>
+        <h:selectOneMenu value="#{studentController.countryOrCity}">
+            <f:selectItem itemValue="country" itemLabel="country"/>
+            <f:selectItem itemValue="city" itemLabel="city"/>
+        </h:selectOneMenu><br/>
+        <h:commandButton value="submit" action="#{studentController.choiceCountryOrCity()}"/><br/>
+
+
+        <h:inputText value="#{name}" />
+        <h:commandButton value="Say Hello" action="result" />
+
+</h:form>
+
+    <p:outputLabel value="Hello JSF"></p:outputLabel>
+</h:body>
+
+
+</html>

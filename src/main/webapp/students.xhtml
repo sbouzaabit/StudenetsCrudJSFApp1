@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{studentController.loadStudents()}"/>
+</f:metadata>
+
+
+
+
+<h:head>
+    <h:outputStylesheet library="css" name="myStyle.css"  />
+</h:head>
+<h:body>
+
+    <h1>Students List in dataTable </h1>
+<h:form>
+    <h:dataTable value="#{studentController.students}" var="student"
+                 styleClass="order-table"
+                 headerClass="order-table-header"
+                 rowClasses="order-table-odd-row,order-table-even-row">
+
+        <h:column>
+            <!-- column header -->
+            <f:facet name="header">Student No</f:facet>
+            <!-- row record -->
+            #{student.id}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Student First Name</f:facet>
+            #{student.firstName}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Student Last Name</f:facet>
+            #{student.lastName}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Email</f:facet>
+            #{student.email}
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Actions</f:facet>
+            <h:commandLink value="Update" action="#{studentController.loadStudent(student.id)}"/>
+
+            |
+
+            <h:commandLink value="Delete" onclick="if (!confirm('Are you sure you wante delete it?')) return false" action="#{studentController.deleteStudent(student.id)}"/>
+        </h:column>
+
+    </h:dataTable><br/>
+</h:form>
+    <h:button value="Add Student" outcome="add"/>
+    <h:messages styleClass="error" />
+
+
+</h:body>
+</html>
