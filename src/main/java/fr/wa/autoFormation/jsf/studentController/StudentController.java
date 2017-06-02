@@ -2,6 +2,8 @@ package fr.wa.autoFormation.jsf.studentController;
 
 import fr.wa.autoFormation.jsf.DAO.StudentDAO;
 import fr.wa.autoFormation.jsf.models.Student;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -113,12 +115,26 @@ public class StudentController {
     }
 
 
+    public void onCellEdit(CellEditEvent event) {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+
+        if(newValue != null && !newValue.equals(oldValue)) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
 
 
+    public void onRowEdit(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Car Edited", String.valueOf(((Student) event.getObject()).getId()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
 
-
-
-
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(((Student) event.getObject()).getId()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
 
 
     //Conditional navigation

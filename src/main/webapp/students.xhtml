@@ -3,8 +3,10 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
+
 
 <f:metadata>
     <f:event type="preRenderView" listener="#{studentController.loadStudents()}"/>
@@ -19,45 +21,139 @@
 <h:body>
 
     <h1>Students List in dataTable </h1>
-<h:form>
-    <h:dataTable value="#{studentController.students}" var="student"
-                 styleClass="order-table"
-                 headerClass="order-table-header"
-                 rowClasses="order-table-odd-row,order-table-even-row">
+    <!--<h:form>
+        <p:dataTable id="cars3" var="student" value="#{studentController.students}" editable="true" editMode="cell" widgetVar="cellCars">
+            <p:column headerText="Id">
+                <h:outputText value="#{student.id}" />
+            </p:column>
 
-        <h:column>
-            <!-- column header -->
-            <f:facet name="header">Student No</f:facet>
-            <!-- row record -->
-            #{student.id}
-        </h:column>
+            <p:column headerText="first name">
+                <h:outputText value="#{student.firstName}" />
+            </p:column>
 
-        <h:column>
-            <f:facet name="header">Student First Name</f:facet>
-            #{student.firstName}
-        </h:column>
+            <p:column headerText="lastName">
+                <h:outputText value="#{student.lastName}" />
+            </p:column>
 
-        <h:column>
-            <f:facet name="header">Student Last Name</f:facet>
-            #{student.lastName}
-        </h:column>
+            <p:column headerText="email">
+                <h:outputText value="#{student.email}" />
+            </p:column>
+            <p:column headerText="email">
+                    <f:facet name="header">Actions</f:facet>
+                    <h:commandLink value="Update" action="#{studentController.loadStudent(student.id)}"/>
 
-        <h:column>
-            <f:facet name="header">Email</f:facet>
-            #{student.email}
-        </h:column>
+                    |
 
-        <h:column>
-            <f:facet name="header">Actions</f:facet>
-            <h:commandLink value="Update" action="#{studentController.loadStudent(student.id)}"/>
+                    <h:commandLink value="Delete" onclick="if (!confirm('Are you sure you wante delete it?')) return false" action="#{studentController.deleteStudent(student.id)}"/>
+            </p:column>
 
-            |
 
-            <h:commandLink value="Delete" onclick="if (!confirm('Are you sure you wante delete it?')) return false" action="#{studentController.deleteStudent(student.id)}"/>
-        </h:column>
+        </p:dataTable>
 
-    </h:dataTable><br/>
-</h:form>
+        <p:column headerText="action2">
+                <p:contextMenu for="cars3" widgetVar="cMenu">
+                    <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellCars').showCellEditor();return false;"/>
+                    <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>
+                </p:contextMenu>
+            </p:column>
+    </h:form>
+-->
+    <h:form id="form">
+    <p:growl id="msgs" showDetail="true"/>
+    <p:dataTable id="cars" var="car" value="#{studentController.students}" editable="true" > <!--editMode="cell" widgetVar="cellCars"-->
+      <!--  <f:facet name="header">
+            Cell Editing with Click and RightClick
+        </f:facet>
+
+        <p:ajax event="cellEdit" listener="#{studentController.onCellEdit}" update=":form:msgs" />-->
+
+        <f:facet name="header">
+            Row Editing
+        </f:facet>
+
+        <p:ajax event="rowEdit" listener="#{studentController.onRowEdit}" update=":form:msgs" />
+        <p:ajax event="rowEditCancel" listener="#{studentController.onRowCancel}" update=":form:msgs" />
+
+        <p:column headerText="Id">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{car.id}" /></f:facet>
+                <f:facet name="input"><p:inputText id="modelInput" value="#{car.id}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+
+
+        <p:column headerText="firstName">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{car.firstName}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{car.firstName}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+
+
+        <p:column headerText="lastName">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{car.lastName}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{car.lastName}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+
+        <p:column headerText="email">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{car.email}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{car.email}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+
+        <p:column style="width:32px">
+            <p:rowEditor />
+        </p:column>
+
+    </p:dataTable>
+
+<!--    <p:contextMenu for="cars" widgetVar="cMenu">
+        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellCars').showCellEditor();return false;"/>
+        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>
+    </p:contextMenu>-->
+    </h:form>
+    <!--<h:form>
+        <h:dataTable value="#{studentController.students}" var="student"
+                     styleClass="order-table"
+                     headerClass="order-table-header"
+                     rowClasses="order-table-odd-row,order-table-even-row">
+
+            <h:column>
+                &lt;!&ndash; column header &ndash;&gt;
+                <f:facet name="header">Student No</f:facet>
+                &lt;!&ndash; row record &ndash;&gt;
+                #{student.id}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Student First Name</f:facet>
+                #{student.firstName}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Student Last Name</f:facet>
+                #{student.lastName}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                #{student.email}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Actions</f:facet>
+                <h:commandLink value="Update" action="#{studentController.loadStudent(student.id)}"/>
+
+                |
+
+                <h:commandLink value="Delete" onclick="if (!confirm('Are you sure you wante delete it?')) return false" action="#{studentController.deleteStudent(student.id)}"/>
+            </h:column>
+
+        </h:dataTable><br/>
+    </h:form>-->
     <h:button value="Add Student" outcome="add"/>
     <h:messages styleClass="error" />
 

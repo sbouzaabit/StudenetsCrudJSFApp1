@@ -30,5 +30,9 @@
             <res-auth>Container</res-auth>
         </resource-ref>
 
+    <welcome-file-list>
+        <welcome-file>students.xhtml</welcome-file>
+    </welcome-file-list>
+
 
 </web-app>
